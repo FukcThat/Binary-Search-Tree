@@ -35,7 +35,37 @@ export default class Tree {
   };
 
   // Inset(value)
-  insertValue = (value) => {};
+  insertValue = (value) => {
+    // start at root
+    if (this.root === null) {
+      this.root = new Node(value);
+      return;
+    }
+    let currentNode = this.root;
+
+    while (currentNode) {
+      if (currentNode.value < value) {
+        // go right
+        if (!currentNode.right) {
+          currentNode.right = new Node(value);
+          return;
+        }
+
+        currentNode = currentNode.right;
+      } else if (currentNode.value > value) {
+        if (!currentNode.left) {
+          currentNode.left = new Node(value);
+          return;
+        }
+        currentNode = currentNode.left;
+        // go left
+      } else {
+        // it IS the value in which case we cannot add it so we can just return false
+        return;
+      }
+    }
+    // when at null, insert value
+  };
 
   // deleteItem(value)
 
