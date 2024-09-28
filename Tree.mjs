@@ -35,23 +35,7 @@ export default class Tree {
   };
 
   // Inset(value)
-  insertValue = (root, value) => {
-    // Make current Node the root
-    if (root === null) return new Node(value);
-
-    // If the root exists and the value is our value, just return that I guess
-    if (root.value === value) return root;
-
-    // Recursively compare value to insert with current Node
-    if (value < root.value) {
-      // --> Go left if value is smaller
-      root.left = insert(root.left, value);
-    } else if (value > root.value) {
-      // --> Go right if value is larger
-      root.right = insert(root.right, value);
-    }
-    return root;
-  };
+  insertValue = (value) => {};
 
   // deleteItem(value)
 
