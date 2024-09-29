@@ -34,7 +34,7 @@ export default class Tree {
     return newNode;
   };
 
-  // Inset(value)
+  // Inset (value)
   insertValue = (value) => {
     // start at root
     if (this.root === null) {
@@ -64,10 +64,30 @@ export default class Tree {
         return;
       }
     }
-    // when at null, insert value
   };
 
-  // deleteItem(value)
+  // Find Item(value)
+  findItem = (value) => {
+    // Start at root
+    let currentNode = this.root;
+
+    while (currentNode !== null) {
+      // console.log("Current Node:", currentNode.value);
+      if (currentNode.value === value) {
+        // console.log("Found:", currentNode.value);
+        return currentNode;
+      } else if (value < currentNode.value) {
+        currentNode = currentNode.left;
+      } else if (value > currentNode.value) {
+        currentNode = currentNode.right;
+      }
+    }
+    // console.log("Value not found:", value);
+    return null;
+  };
+
+  // Delete Item(value)
+  deleteItem = (value) => {};
 
   // Pretty print
   prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
