@@ -87,7 +87,14 @@ export default class Tree {
   };
 
   // Delete Item(value)
-  deleteItem = (value) => {};
+  deleteItem = (value) => {
+    // find item
+    // if item has no children, cheers youre done
+    // if item has children, check for the largest child recursively
+    // once you find that, make it the new right child for its parent
+    // sort of cheers i guess
+    // today is just not the day for the brain juice
+  };
 
   // Pretty print
   prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
