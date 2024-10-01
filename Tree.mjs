@@ -86,14 +86,40 @@ export default class Tree {
     return null;
   };
 
+  // Delete I guess
+  delete = (value) => {
+    this.root = this.deleteItem(this.root, value);
+  };
+
   // Delete Item(value)
-  deleteItem = (value) => {
-    // find item
-    // if item has no children, cheers youre done
-    // if item has children, check for the largest child recursively
-    // once you find that, make it the new right child for its parent
-    // sort of cheers i guess
-    // today is just not the day for the brain juice
+  deleteItem = (root, value) => {
+    if (!root) return;
+
+    if (value < root.value) {
+      root.left = this.deleteItem(root.left, value);
+    } else if (value > root.value) {
+      root.right = this.deleteItem(root.right, value);
+    } else {
+      if (!root.left) {
+        return root.right;
+      } else if (!root.right) {
+        return root.left;
+      }
+
+      const minNode = this.findMinNode(root.right);
+      root.value = minNode.value;
+      root.right = this.deleteItem(root.right, minNode.value);
+    }
+
+    return root;
+  };
+
+  // Find Min. Node
+  findMinNode = (node) => {
+    while (node.left) {
+      node = node.left;
+    }
+    return node;
   };
 
   // Pretty print
@@ -105,49 +131,3 @@ export default class Tree {
     }
   };
 }
-
-// import Node from "./Node.mjs";
-
-// export default class Tree {
-//   constructor(array) {
-//     this.root = this.buildTree(array);
-//   }
-
-//   buildTree = (array) => {
-//     // Sort input array
-//     array.sort((a, b) => {
-//       return a - b;
-//     });
-//     // Set input array to set to remove duplicates, then turn it back into array for funtionality
-//     let set = new Set(array);
-//     array = Array.from(set);
-
-//     // Call TreeFromSortedArray
-//     return this.treeFromSortedAray(array, 0, array.length - 1);
-//   };
-
-//   // Helper Functions
-
-//   treeFromSortedAray = (array, start, end) => {
-//     // If start > end return null
-//     if (start > end) return null;
-
-//     // Get middle of array
-//     let centerIndex = Math.floor((end + start) / 2);
-//     const newNode = new Node(array[centerIndex]);
-
-//     // Recursively get left & right
-//     newNode.left = this.treeFromSortedAray(array, start, centerIndex - 1);
-//     newNode.right = this.treeFromSortedAray(array, centerIndex + 1, end);
-//     return newNode;
-//   };
-
-// Pretty print
-// prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
-//   if (node !== null) {
-//     console.log(prefix + (isLeft ? "├── " : "└── ") + node.value);
-//     this.prettyPrint(node.left, prefix + (isLeft ? "│   " : "    "), true);
-//     this.prettyPrint(node.right, prefix + (isLeft ? "│   " : "    "), false);
-//   }
-// };
-// }
