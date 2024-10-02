@@ -122,6 +122,69 @@ export default class Tree {
     return node;
   };
 
+  // Level Order
+  levelOrder = (callback) => {
+    // If there's no callback, throw error
+    if (!callback) {
+      throw new Error("Please provide a callback");
+    }
+
+    // If theres no root, stop.
+    if (!this.root) return [];
+
+    // Make a queue and a result array to store the nodes in
+    const result = [];
+    const q = [this.root];
+
+    //
+    while (q.length) {
+      let currentNode = q.shift();
+      callback(currentNode.value);
+
+      result.push(currentNode.value);
+      if (currentNode.left) {
+        q.push(currentNode.left);
+      }
+      if (currentNode.right) {
+        q.push(currentNode.right);
+      }
+    }
+    return result;
+  };
+
+  // Level Order - Recursive
+  levelOrderRec = (callback) => {
+    // If there's no callback, throw error
+    if (!callback) {
+      throw new Error("Please provide a callback");
+    }
+
+    // If theres no root, stop.
+    if (!this.root) return [];
+
+    const result = [];
+    const q = [this.root];
+
+    const traverse = () => {
+      if (q.length === 0) return;
+      const currentNode = q.shift();
+
+      callback(currentNode.value);
+      result.push(currentNode.value);
+
+      if (currentNode.left) {
+        q.push(currentNode.left);
+      }
+      if (currentNode.right) {
+        q.push(currentNode.right);
+      }
+      traverse();
+    };
+    traverse();
+
+    return result;
+  };
+
   // Pretty print
   prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
     if (node !== null) {
