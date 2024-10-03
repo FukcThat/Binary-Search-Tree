@@ -185,6 +185,31 @@ export default class Tree {
     return result;
   };
 
+  // In Order - Recursive
+  inOrderRec = (callback) => {
+    // If there's no callback, throw error
+    if (!callback) {
+      throw new Error("Please provide a callback");
+    }
+
+    // If theres no root, stop.
+    if (!this.root) return [];
+
+    //
+    const result = [];
+
+    const traverseInOrder = (root) => {
+      if (!root) return;
+      traverseInOrder(root.left);
+      callback(root.value);
+      result.push(root);
+      traverseInOrder(root.right);
+    };
+
+    traverseInOrder(this.root);
+    return result;
+  };
+
   // Pretty print
   prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
     if (node !== null) {
