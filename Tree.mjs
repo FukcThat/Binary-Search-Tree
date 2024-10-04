@@ -234,6 +234,28 @@ export default class Tree {
   };
 
   // Post Order
+  postOrderRec = (callback) => {
+    // If there's no callback, throw error
+    if (!callback) {
+      throw new Error("Please provide a callback");
+    }
+
+    // If theres no root, stop.
+    if (!this.root) return [];
+
+    //
+    const result = [];
+
+    const traversePostOrder = (node) => {
+      if (!node) return;
+      traversePostOrder(node.left);
+      traversePostOrder(node.right);
+      callback(node.value);
+      result.push(node);
+    };
+    traversePostOrder(this.root);
+    return result;
+  };
 
   // Pretty print
   prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
