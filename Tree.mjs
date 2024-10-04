@@ -205,10 +205,35 @@ export default class Tree {
       result.push(root);
       traverseInOrder(root.right);
     };
-
     traverseInOrder(this.root);
     return result;
   };
+
+  // Pre Order
+  preOrderRec = (callback) => {
+    // If there's no callback, throw error
+    if (!callback) {
+      throw new Error("Please provide a callback");
+    }
+
+    // If theres no root, stop.
+    if (!this.root) return [];
+
+    //
+    const result = [];
+
+    const traversePreOrder = (node) => {
+      if (!node) return;
+      callback(node.value);
+      result.push(node);
+      traversePreOrder(node.left);
+      traversePreOrder(node.right);
+    };
+    traversePreOrder(this.root);
+    return result;
+  };
+
+  // Post Order
 
   // Pretty print
   prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
