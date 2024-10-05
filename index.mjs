@@ -4,7 +4,10 @@ const firstTree = new Tree([1, 3, 5, 7, 14, 32, 56]);
 
 firstTree.insertValue(22);
 firstTree.prettyPrint();
-firstTree.postOrderRec((val) => console.log(val));
+
+firstTree.findDepth(this.root, 22);
+
+// firstTree.postOrderRec((val) => console.log(val));
 
 // const levelOrderArray = [];
 

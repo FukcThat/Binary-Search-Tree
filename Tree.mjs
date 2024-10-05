@@ -257,6 +257,28 @@ export default class Tree {
     return result;
   };
 
+  // Depth
+  findDepth = (root, x) => {
+    // If there's no root just stop
+    if (!this.root) return -1;
+
+    // Make distance variable 1 for the logic
+    let distance = -1;
+
+    // if the root is what we're looking for OR the distance of the root's left or right recursively are, return +1
+    if (
+      root.value === x ||
+      (distance = this.findDepth(root.left, x)) >= 0 ||
+      (distance = this.findDepth(root.right, x)) >= 0
+    ) {
+      return distance + 1;
+    }
+    // Otherwise return -1 (so just the distance as is)
+    return dist;
+  };
+
+  // Height
+
   // Pretty print
   prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
     if (node !== null) {
