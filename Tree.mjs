@@ -279,7 +279,7 @@ export default class Tree {
 
   // Height
   findHeight = (root, value) => {
-    if (!root) return -1;
+    if (!this.root) return -1;
 
     let leftHeight = this.findHeight(root.left, value);
     let rightHeight = this.findHeight(root.right, value);
@@ -290,6 +290,28 @@ export default class Tree {
     }
 
     return height;
+  };
+
+  // Is Balanced stuff
+  treeHeight = (root) => {
+    if (!this.root) return 0;
+    return Math.max(treeHeight(root.left), this.treeHeight(root.right)) + 1;
+  };
+
+  isBalanced = (root) => {
+    if (!this.root) return true;
+
+    let leftTreeHeight = this.treeHeight(root.left);
+    let rightTreeHeight = this.treeHeight(root.right);
+
+    if (
+      Math.abs(leftTreeHeight - rightTreeHeight) <= 1 &&
+      this.isBalanced(root.left == true) &&
+      this.isBalanced(root.right) == true
+    ) {
+      return true;
+    }
+    return false;
   };
 
   // Pretty print
