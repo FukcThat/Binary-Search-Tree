@@ -258,7 +258,7 @@ export default class Tree {
   };
 
   // Depth
-  findDepth = (root, x) => {
+  findDepth = (root, value) => {
     // If there's no root just stop
     if (!this.root) return -1;
 
@@ -267,9 +267,9 @@ export default class Tree {
 
     // if the root is what we're looking for OR the distance of the root's left or right recursively are, return +1
     if (
-      root.value === x ||
-      (distance = this.findDepth(root.left, x)) >= 0 ||
-      (distance = this.findDepth(root.right, x)) >= 0
+      root.value === value ||
+      (distance = this.findDepth(root.left, value)) >= 0 ||
+      (distance = this.findDepth(root.right, value)) >= 0
     ) {
       return distance + 1;
     }
@@ -278,6 +278,19 @@ export default class Tree {
   };
 
   // Height
+  findHeight = (root, value) => {
+    if (!root) return -1;
+
+    let leftHeight = this.findHeight(root.left, value);
+    let rightHeight = this.findHeight(root.right, value);
+    let totalHeight = Math.max(leftHeight, rightHeight) + 1;
+
+    if (root.value === value) {
+      height = totalHeight;
+    }
+
+    return height;
+  };
 
   // Pretty print
   prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
