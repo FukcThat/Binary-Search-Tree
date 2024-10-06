@@ -1,5 +1,7 @@
 import Node from "./Node.mjs";
 
+let height = -1;
+
 // Tree class
 export default class Tree {
   constructor(array) {
@@ -40,6 +42,10 @@ export default class Tree {
     if (this.root === null) {
       this.root = new Node(value);
       return;
+    }
+
+    if (!this.isBalanced(this.root)) {
+      this.rebalanceTree();
     }
     let currentNode = this.root;
 
@@ -260,7 +266,7 @@ export default class Tree {
   // Depth
   findDepth = (root, value) => {
     // If there's no root just stop
-    if (!this.root) return -1;
+    if (!root) return -1;
 
     // Make distance variable 1 for the logic
     let distance = -1;
@@ -274,32 +280,40 @@ export default class Tree {
       return distance + 1;
     }
     // Otherwise return -1 (so just the distance as is)
-    return dist;
+    return distance;
   };
 
   // Height
-  findHeight = (root, value) => {
-    if (!this.root) return -1;
+  findHeightUtil = (root, value) => {
+    if (!root) return -1;
 
-    let leftHeight = this.findHeight(root.left, value);
-    let rightHeight = this.findHeight(root.right, value);
+    let leftHeight = this.findHeightUtil(root.left, value);
+    let rightHeight = this.findHeightUtil(root.right, value);
     let totalHeight = Math.max(leftHeight, rightHeight) + 1;
 
     if (root.value === value) {
       height = totalHeight;
     }
 
+    return totalHeight;
+  };
+
+  findHeight = (root, value) => {
+    this.findHeightUtil(root, value);
     return height;
   };
 
   // Is Balanced stuff
   treeHeight = (root) => {
-    if (!this.root) return 0;
-    return Math.max(treeHeight(root.left), this.treeHeight(root.right)) + 1;
+    if (!root) return 0;
+
+    return (
+      Math.max(this.treeHeight(root.left), this.treeHeight(root.right)) + 1
+    );
   };
 
   isBalanced = (root) => {
-    if (!this.root) return true;
+    if (!root) return true;
 
     let leftTreeHeight = this.treeHeight(root.left);
     let rightTreeHeight = this.treeHeight(root.right);
@@ -312,6 +326,13 @@ export default class Tree {
       return true;
     }
     return false;
+  };
+
+  // Rebalance
+  rebalanceTree = () => {
+    let values = [];
+    this.inOrderRec((val) => values.push(val));
+    this.root = this.buildTreeFromArray(values, 0, values.length - 1);
   };
 
   // Pretty print
