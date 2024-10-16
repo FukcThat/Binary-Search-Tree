@@ -93,8 +93,47 @@ export default class Tree {
   };
 
   // Delete Item(value)
+  deleteNode = (value) => {
+    this.root = this.delete(this.root, value);
+  };
 
-  // Find min. Node
+  // Deletion Helper (that does all the actual work)
+  delete = (root, value) => {
+    // if there is no root, there's nothing to delete
+    if (!root) return;
+
+    // if the value is smaller than the root value, set the root's left to recursively call delete on root's left with the value, same on the right
+    if (value < root.value) {
+      root.left = this.delete(root.left, value);
+    } else if (value > root.value) {
+      root.right = this.delete(root.right, value);
+    } else {
+      // if the root has no left, return the root's right and vice versa
+      if (!root.left) {
+        return root.right;
+      } else if (!root.right) {
+        return root.left;
+      }
+
+      // Find the largest value in the left subtree from our root
+      let maxNode = this.findMaxNode(root.left);
+
+      // Set root.value to maxNode's value
+      root.value = maxNode.value;
+
+      // recursively call delete on all the deleted nodes children
+      root.left = this.delete(root.left, maxNode.value);
+    }
+    return root;
+  };
+
+  // Delete Helpter - Finds min. Node to replace deleted value with
+  findMaxNode = (node) => {
+    while (node.right) {
+      node = node.right;
+    }
+    return node;
+  };
 
   // Level Order
 
