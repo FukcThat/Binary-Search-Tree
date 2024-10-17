@@ -47,6 +47,7 @@ export default class Tree {
     if (!this.isBalanced(this.root)) {
       this.rebalanceTree();
     }
+
     let currentNode = this.root;
 
     while (currentNode) {
@@ -56,17 +57,16 @@ export default class Tree {
           currentNode.right = new Node(value);
           return;
         }
-
         currentNode = currentNode.right;
       } else if (currentNode.value > value) {
+        // go left
         if (!currentNode.left) {
           currentNode.left = new Node(value);
           return;
         }
         currentNode = currentNode.left;
-        // go left
       } else {
-        // it IS the value in which case we cannot add it so we can just return false
+        // it IS the value in which case we cannot add it so we can just return
         return;
       }
     }
