@@ -136,6 +136,39 @@ export default class Tree {
   };
 
   // Level Order
+  levelOrder = (callback) => {
+    // make sure there's a callback
+    if (!callback) {
+      throw new Error("Callback please");
+    }
+
+    // if there's no root, stop
+    if (!this.root) return;
+
+    // Make a result array & a queue
+    const result = [];
+    const q = [this.root];
+
+    // while the queue isn't empty
+    while (q.length) {
+      // make a current variable for the first element in the q
+      let firstInQ = q.shift();
+      callback(firstInQ);
+
+      // and push it to the result array
+      result.push(firstInQ.value);
+
+      // put it's children into the queue
+      if (firstInQ.left) {
+        q.push(firstInQ.left);
+      }
+      if (firstInQ.right) {
+        q.push(firstInQ.right);
+      }
+    }
+    // return the result array
+    return result;
+  };
 
   // In Order
 
