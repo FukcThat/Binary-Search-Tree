@@ -171,6 +171,16 @@ export default class Tree {
   };
 
   // In Order
+  inOrderRec = (callback) => {
+    if (!callback) {
+      throw new Error("Callback please");
+    }
+
+    if (!this.root) return;
+
+    // Make result array
+    result = [];
+  };
 
   // Pre Order
 
