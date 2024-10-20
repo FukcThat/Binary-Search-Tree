@@ -172,14 +172,26 @@ export default class Tree {
 
   // In Order
   inOrderRec = (callback) => {
+    // If there's no callback, throw error
     if (!callback) {
-      throw new Error("Callback please");
+      throw new Error("Please provide a callback");
     }
 
-    if (!this.root) return;
+    // If theres no root, stop.
+    if (!this.root) return [];
 
-    // Make result array
-    result = [];
+    //
+    const result = [];
+
+    const traverseInOrder = (root) => {
+      if (!root) return;
+      traverseInOrder(root.left);
+      callback(root.value);
+      result.push(root);
+      traverseInOrder(root.right);
+    };
+    traverseInOrder(this.root);
+    return result;
   };
 
   // Pre Order
