@@ -223,6 +223,30 @@ export default class Tree {
   };
 
   // Post Order
+  postOrderRec = (callback) => {
+    // If there's no callback, throw error
+    if (!callback) {
+      throw new Error("Please provide a callback");
+    }
+
+    // If theres no root, stop.
+    if (!this.root) return [];
+
+    // Make result array
+    const result = [];
+
+    // Make helper function to traverse left, right, center
+    const traversePostOrder = (node) => {
+      if (!node) return;
+      traversePostOrder(node.left);
+      traversePostOrder(node.right);
+      callback(node.value);
+      result.push(node);
+    };
+    // Recursively call the function passing in the root and return the result array
+    traversePostOrder(this.root);
+    return result;
+  };
 
   // Depth
 
