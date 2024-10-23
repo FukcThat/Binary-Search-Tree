@@ -269,6 +269,40 @@ export default class Tree {
   };
 
   // Height
+  // Make a Util to do all the work
+  findHeightUtil = (root, value) => {
+    // if there's no passed in root, stop
+    if (!root) return -1;
+
+    // Make a variable for the left, right & total height
+    // Set the left & right right to call this function recursively on the left and right respectively
+    let leftHeight = this.findHeightUtil(root.left, value);
+    let rightHeight = this.findHeightUtil(root.right, value);
+    // Find the max. height of the left and right, then add 1
+    let totalHeight = Math.max(leftHeight, rightHeight) + 1;
+
+    // if the value we're looking at is the value we're looking for, return the totalHeight
+    if (root.value === value) {
+      return totalHeight;
+    }
+
+    // Otherwise return totalHeight which will be -1 unless the above if statements is true
+    return totalHeight;
+  };
+
+  // Actual function for cleanliness
+  findHeight = (root, value) => {
+    // Make a height variable and set it equal to calling the Util
+    let height = this.findHeightUtil(root, value);
+
+    // If the node wasn't found, return -1 to avoid running the util at all
+    if (height === -1) {
+      console.log("Node not found");
+    }
+
+    // Otherwise return the height the util calculated
+    console.log(height);
+  };
 
   // Is Balances
 
